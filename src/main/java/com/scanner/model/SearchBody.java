@@ -1,22 +1,34 @@
 package com.scanner.model;
 
+import java.util.List;
+
 public class SearchBody {
-	String name;
-	String type;
+	List<String> hackthon_name;
+	String project_name;
+	String problem;
 	String industry;
 	String technology;
+	String user;
+	String header;
+	String data;
 	
-	public String getName() {
-		return name;
+	public List<String> getHackthon_name() {
+		return hackthon_name;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setHackthon_name(List<String> hackthon_name) {
+		this.hackthon_name = hackthon_name;
 	}
-	public String getType() {
-		return type;
+	public String getProject_name() {
+		return project_name;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setProject_name(String project_name) {
+		this.project_name = project_name;
+	}
+	public String getProblem() {
+		return problem;
+	}
+	public void setProblem(String problem) {
+		this.problem = problem;
 	}
 	public String getIndustry() {
 		return industry;
@@ -30,5 +42,24 @@ public class SearchBody {
 	public void setTechnology(String technology) {
 		this.technology = technology;
 	}
+	public String getUser() {
+		return user;
+	}
+	public void setUser(String user) {
+		this.user = user;
+	}
+	public String getHeader() {
+		return header;
+	}
+	public void setHeader(String header) {
+		this.header = header;
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
+	
 
 }
