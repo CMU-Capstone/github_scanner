@@ -210,7 +210,7 @@ public class Util {
 				}
 				
 				if (user != null && user.length() != 0) {
-					BasicDBObject userOBJ = new BasicDBObject("user", user);
+					BasicDBObject userOBJ = new BasicDBObject("email", user);
 					obj.add(userOBJ);
 				}
 				
