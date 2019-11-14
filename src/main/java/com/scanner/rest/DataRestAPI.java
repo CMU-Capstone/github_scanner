@@ -54,10 +54,10 @@ public class DataRestAPI {
 		String problem = searchBody.getProblem();
 		String industry = searchBody.getIndustry();
 		String technology = searchBody.getTechnology();
-		String user = searchBody.getUser();
+		String email = searchBody.getEmail();
 		String header = searchBody.getHeader();
 		String data = searchBody.getData();
-		return Util.search(hackthon_name, project_name, problem, industry, technology, user, header, data);
+		return Util.search(hackthon_name, project_name, problem, industry, technology, email, header, data);
 	}
 }
 

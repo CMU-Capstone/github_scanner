@@ -119,7 +119,7 @@ public class Util {
 						}
 						usersListClean.add(email);
 					}
-					doc.append("user", usersListClean);
+					doc.append("email", usersListClean);
 				} else if (inputLine.contains("#")){
 					System.out.println("!!!!!!!!!!!" + inputLine);
 					String otherHeader = inputLine.substring(2, inputLine.length());

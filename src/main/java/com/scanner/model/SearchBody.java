@@ -8,7 +8,7 @@ public class SearchBody {
 	String problem;
 	String industry;
 	String technology;
-	String user;
+	String email;
 	String header;
 	String data;
 	
@@ -42,11 +42,11 @@ public class SearchBody {
 	public void setTechnology(String technology) {
 		this.technology = technology;
 	}
-	public String getUser() {
-		return user;
+	public String getEmail() {
+		return email;
 	}
-	public void setUser(String user) {
-		this.user = user;
+	public void setEmail(String user) {
+		this.email = user;
 	}
 	public String getHeader() {
 		return header;
