@@ -2,15 +2,19 @@ package com.scanner.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.bson.Document;
-import org.bson.json.JsonMode;
+import org.bson.json.*;
+import org.json.*;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCursor;
@@ -53,6 +57,38 @@ public class Util {
 		String content = path.substring(19);
 		return prefix + content + suffix;
 	}
+
+
+    private static void getExtensionCount(URL url, Map<String, Integer> map) throws Exception {
+        System.out.println("!!!!" + url);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String line = "", inputLine;
+        while ((inputLine = reader.readLine()) != null) {
+            line += inputLine + "\n";
+        }
+
+        JSONArray array = new JSONArray(line);
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject object = (JSONObject) array.get(i);
+            String type = object.getString("type");
+            if (type.equals("file")) {
+                String name = object.getString("name");
+                String extension;
+                if (name.contains(".")) {
+                    extension = name.split("\\.")[1];
+                    if (map.containsKey(extension)) {
+                        map.put(extension, map.get(extension)+1);
+                    } else {
+                        map.put(extension, 1);
+                    }
+                }
+            } else if (type.equals("dir")){
+                String pathName = object.getString("name");
+                getExtensionCount(new URL(url.toString()+"/"+pathName), map);
+            }
+        }
+    }
 	
 	public static void mongoSaveRepo(String hackthonName, List<String> repoLinks) {
 		MongoDatabase database = openConnection();
@@ -134,6 +170,23 @@ public class Util {
 					doc.append(otherHeader, sb.toString());
 				} 
 			}
+			
+			String content = path.substring(8);
+			String[] parts = content.split("/");
+			
+	        String userName = parts[1];
+	        String projectName = parts[2];
+	        
+	        Map<String, Integer> map = new HashMap<>();
+	        URL url2 = new URL("https://api.github.com/repos/"+userName+"/"+projectName+"/contents");
+//	        URL url2 = new URL("https://api.github.com/repos/craze3/wholesaleby/contents");
+	        getExtensionCount(url2, map);
+	        JSONObject output = new JSONObject(map);
+	        Document fileExtensions = new Document();
+	        for (String key: map.keySet()) {
+	        	fileExtensions.append(key, map.get(key));
+	        }
+	        doc.append("file_extension", fileExtensions);
 			collection.insertOne(doc);
 			in.close();
 			System.out.println("Add one ducoment: " + doc.toString());

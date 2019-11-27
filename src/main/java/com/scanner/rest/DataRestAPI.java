@@ -5,6 +5,7 @@ import java.util.*;
 import org.bson.Document;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +26,7 @@ import com.scanner.util.Util;
 @RequestMapping("github_scanner/api")
 public class DataRestAPI {
 	
+	@CrossOrigin(origins = "*")
 	@PostMapping("add")
 	public ResponseEntity<HttpStatus> add(@RequestBody AddRepoModel addBody) {
 		String hackthonName = addBody.getHackthon_name();
@@ -35,11 +37,13 @@ public class DataRestAPI {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 	
+	@CrossOrigin(origins = "*")
 	@GetMapping("all")
 	public List<String> pollAccess() {
 		return Util.getAllHackthonNames();
 	}
 	
+	@CrossOrigin(origins = "*")
 	@PostMapping("reset")
 	public ResponseEntity<HttpStatus> reset(@RequestBody ResetHackthonoModel resetBody) {
 		String hackthonName = resetBody.getHackthon_name();
@@ -47,6 +51,7 @@ public class DataRestAPI {
 		return ResponseEntity.ok(HttpStatus.OK);
 	}
 	
+	@CrossOrigin(origins = "*")
 	@PostMapping("search")
 	public List<Document> search(@RequestBody SearchBody searchBody) {
 		List<String> hackthon_name = searchBody.getHackthon_name();
